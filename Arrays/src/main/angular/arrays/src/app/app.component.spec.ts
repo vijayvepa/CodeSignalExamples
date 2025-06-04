@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { inject } from '@angular/core';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -26,4 +27,11 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('Hello, arrays');
   });
+	
+	it('should execute arrays example', () => {
+		const component = new AppComponent();
+		const output = component.arrayExample();
+		console.log("Output:" + output);
+		expect(output).toEqual('Array: Apt 101,Apt 102,Apt 103,Apt 201,vacant,Apt 203,Apt 301,Apt 302,Apt 303');
+	})
 });
