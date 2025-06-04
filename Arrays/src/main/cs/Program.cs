@@ -15,3 +15,38 @@ string ArrayExample()
 }
 
 Console.WriteLine(ArrayExample());
+
+string ColumnarZigZag()
+{
+	int[][] matrix = [
+		[1, 2, 3,4],
+		[5, 6, 7, 8],
+		[9, 10, 11, 12]
+	];
+
+	int[] columnarZigZagExpected = [12, 8, 4, 3, 7, 11, 10, 6, 2, 1, 5, 9];
+
+	// [3,4], [2, 4], [1, 4]  -- decrease x until 1
+	// [1, 3], [2, 3], [3, 3] -- decrease y, increase x until max
+	// [3, 2], [2, 2], [1, 2] -- decrease y, decrease x until 0
+	// [1, 1], [2, 1], [3, 1] -- decrease y, increase x until max
+
+	int[] columnarZigZagActual = new int[matrix.Length * matrix[0].Length];
+
+	columnarZigZagActual[0] = matrix[matrix.Length - 1][matrix[0].Length - 1];
+	columnarZigZagActual[1] = matrix[matrix.Length - 2][matrix[0].Length - 1];
+	columnarZigZagActual[2] = matrix[matrix.Length - 3][matrix[0].Length - 1];
+
+	columnarZigZagActual[3] = matrix[matrix.Length - 3][matrix[0].Length - 2];
+	columnarZigZagActual[4] = matrix[matrix.Length - 2][matrix[0].Length - 2];
+	columnarZigZagActual[5] = matrix[matrix.Length - 1][matrix[0].Length - 2];
+
+
+
+	Console.WriteLine("{0}", string.Join(",", columnarZigZagActual));
+
+
+	return "";
+}
+
+Console.WriteLine(ColumnarZigZag());
