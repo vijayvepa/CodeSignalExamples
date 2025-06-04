@@ -24,8 +24,8 @@ public class DemoApplication implements CommandLineRunner {
 				{1, 2, 3},
 				{4, 5, 6},
 				{7, 8, 9}
-		}
-		;
+		};
+
 		log.info("First floor second item: {}", example[0][1]);
 		log.info(Arrays.deepToString(example));
 
@@ -47,7 +47,23 @@ public class DemoApplication implements CommandLineRunner {
 		log.info(Arrays.deepToString(example));
 
 		//number of floors:
-		System.out.println();
+		log.info("Number of floors: {}", example.length);
+		log.info("Number of apartments in first floor: {}", example[0].length);
+
+		Integer[][] biggerArray = DimensionalArrays.withNewRow(example, new Integer[]{11,12,13});
+		log.info("Copied array with new row: {}", Arrays.deepToString(biggerArray) );
+
+		Integer[][] smallerArray = DimensionalArrays.withRowRemoved(example, 2);
+		log.info("Smaller array : {}", Arrays.deepToString(smallerArray));
+
+		String[][] apartmentBuilding = {
+				{"Apt 101 true", "Apt 102 false", "Apt 103 false"},
+				{"Apt 201 true", "Apt 202 true", "Apt 203 false"},
+				{"Apt 301", "Apt 302", "Apt 303"}
+		};
+
+
+
 	}
 
 }
