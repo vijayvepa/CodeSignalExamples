@@ -16,13 +16,8 @@ string ArrayExample()
 
 Console.WriteLine(ArrayExample());
 
-string ColumnarZigZag()
+int[] ColumnarZigZag(int[][] matrix)
 {
-	int[][] matrix = [
-		[1, 2, 3,4],
-		[5, 6, 7, 8],
-		[9, 10, 11, 12]
-	];
 
 	int[] columnarZigZagExpected = [12, 8, 4, 3, 7, 11, 10, 6, 2, 1, 5, 9];
 
@@ -42,11 +37,36 @@ string ColumnarZigZag()
 	columnarZigZagActual[5] = matrix[matrix.Length - 1][matrix[0].Length - 2];
 
 
+	int[] columnarZigZagAlgo = new int[matrix.Length * matrix[0].Length];
 
-	Console.WriteLine("{0}", string.Join(",", columnarZigZagActual));
+	int outputIndex = 0;
+	int direction = -1;
+	for (int j = 0; j < matrix[0].Length; j++)
+	{
+		for (int i = 0; i < matrix.Length; i++)
+		{
+			int row = direction < 0 ?
+				matrix.Length - 1 - i :
+				i;
+
+			columnarZigZagAlgo[outputIndex + i] = matrix[row][matrix[0].Length - 1 - j];
+		}
+		outputIndex += matrix.Length;
+		direction = -direction;
+	}
 
 
-	return "";
+	Console.WriteLine("{0}", string.Join(",", columnarZigZagExpected));
+	Console.WriteLine("{0}", string.Join(",", columnarZigZagAlgo));
+
+
+	return columnarZigZagAlgo;
 }
 
-Console.WriteLine(ColumnarZigZag());
+int[][] matrix = [
+	[1, 2, 3,4],
+	[5, 6, 7, 8],
+	[9, 10, 11, 12]
+];
+
+Console.WriteLine(string.Join(",", ColumnarZigZag(matrix)));
