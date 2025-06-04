@@ -63,6 +63,9 @@ public class DemoApplication implements CommandLineRunner {
 		};
 
 
+		apartmentBuilding[1][1]= "Vacant";
+
+		log.info("Apartments: {}" , Arrays.deepToString(apartmentBuilding));
 
 	}
 
