@@ -1,13 +1,8 @@
+from apartment import apartment;
+from zigzag import zig_zag_main
+
 def main():
-    array = [
-        ["Apt 101", "Apt 102", "Apt 103"],
-        ["Apt 101", "Apt 102", "Apt 103"],
-        ["Apt 101", "Apt 102", "Apt 103"]
-    ]
-    print(f"Array: ${array}")
-    array[1][0] = 'vacant'
-    
-    print(f'Updated: ${array}')
+    zig_zag_main()
 
 if __name__ == '__main__':
     main()
