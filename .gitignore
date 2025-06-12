@@ -1,2 +1,14 @@
 Arrays/src/main/cpp/CMakeFiles/
 Arrays/src/main/cpp/CMakeCache.txt
+Arrays/src/main/cpp/arrays/build/
+Arrays/src/main/cpp/arrays/build/x64/Debug/
+Arrays/src/main/cpp/arrays/build/CMakeFiles/
+Arrays/**/*.vcxproj
+Arrays/**/*.vcxproj.filters
+Arrays/**/*.cmake
+Arrays/**/*.tcl
+Arrays/**/CMakeCache.txt
+Arrays/**/*.sln
+
+Arrays/**/Debug
+Arrays/**/CMakeFiles
