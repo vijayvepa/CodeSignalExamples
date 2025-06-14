@@ -47,6 +47,7 @@ public class RansomNote {
 
   Map<Integer, Integer> occurrences(String item) {
     Map<Integer, Integer> occurrenceMap = new HashMap<>();
+
     final int[] array = item.chars().toArray();
 
     for(int i =0; i< array.length; i++){
