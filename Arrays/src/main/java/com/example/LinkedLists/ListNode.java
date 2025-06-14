@@ -6,7 +6,14 @@ import java.util.stream.Stream;
 public class ListNode {
   private int value;
   private ListNode nextNode;
-  private String stringValue;
+
+  public int getValue() {
+    return value;
+  }
+
+  public ListNode getNextNode() {
+    return nextNode;
+  }
 
   public ListNode() {
   }
