@@ -45,6 +45,14 @@ public class ListNode {
     return Stream.concat(Stream.of(value), nextNode.toList().stream()).toList();
   }
 
+  public void setValue(int value){
+    this.value = value;
+  }
+
+  public void setNextNode(ListNode listNode) {
+    this.nextNode = listNode;
+  }
+
   @Override
   public String toString() {
     return toList().toString();
