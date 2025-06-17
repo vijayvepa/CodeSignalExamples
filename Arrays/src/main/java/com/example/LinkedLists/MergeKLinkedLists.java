@@ -1,10 +1,7 @@
 package com.example.LinkedLists;
 
-import org.yaml.snakeyaml.util.Tuple;
-
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -28,14 +25,14 @@ public class MergeKLinkedLists {
 
     System.arraycopy(lists, 0, currentNodes, 0, lists.length);
 
-    for(int outer=0; outer<5; outer++) {
+    while (currentNodes.length > 0) {
       currentNodes = sortNodes(currentNodes);
 
       for (int i = 0; i < currentNodes.length; i++) {
 
         System.out.println("Index: " + i);
 
-        if(currentNodes[i] == null) {
+        if (currentNodes[i] == null) {
           continue;
         }
 
@@ -52,12 +49,11 @@ public class MergeKLinkedLists {
           continue;
         }
 
-        if(resultCurr.getValue() <= currentNodes[i].getValue()) {
+        if (resultCurr.getValue() <= currentNodes[i].getValue()) {
           resultCurr.setNextNode(new ListNode(currentNodes[i].getValue()));
           resultCurr = resultCurr.getNextNode();
           currentNodes[i] = currentNodes[i].getNextNode();
-        }
-        else {
+        } else {
           resultCurr.setNextNode(new ListNode(resultCurr.getValue(), resultCurr.getNextNode()));
           resultCurr.setValue(currentNodes[i].getValue());
 
@@ -71,13 +67,17 @@ public class MergeKLinkedLists {
     return result;
   }
 
+  public static void main(String[] args) {
+    new MergeKLinkedLists().run();
+  }
 
   //TODO: manually sort
-  public ListNode[] sortNodes(ListNode[] nodes){
+  public ListNode[] sortNodes(ListNode[] nodes) {
     Map<Integer, List<ListNode>> listNodeMap = Arrays.stream(nodes)
-        .filter(x-> x != null)
-        .collect(Collectors.toMap(ListNode::getValue, node-> Stream.of(node).toList(), (x,y) ->
-        Stream.concat(x.stream(), y.stream()).toList()));
+        .filter(x -> x != null)
+        .collect(Collectors.toMap(
+            ListNode::getValue, node -> Stream.of(node).toList(), (x, y) ->
+                Stream.concat(x.stream(), y.stream()).toList()));
     final List<Integer> list = listNodeMap.keySet().stream().sorted().toList();
 
     return list.stream().map(listNodeMap::get).flatMap(Collection::stream).toList().toArray(new ListNode[0]);
@@ -87,9 +87,6 @@ public class MergeKLinkedLists {
     test(this::mergeKLists);
   }
 
-  public static void main(String[] args) {
-    new MergeKLinkedLists().run();
-  }
 
   void test(Function<ListNode[], ListNode> solution) {
 
