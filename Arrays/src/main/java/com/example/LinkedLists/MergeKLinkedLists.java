@@ -28,15 +28,15 @@ public class MergeKLinkedLists {
     }
 
     while (currentNodes.length > 0) {
-      currentNodes = sortNodes(currentNodes);
+      currentNodes = sortHeads(currentNodes);
 
+      //vertical traversal
       for (int i = 0; i < currentNodes.length; i++) {
 
         System.out.print("Index: " + i);
         System.out.print(", ResultCurr: " + resultCurr);
         System.out.print(", CurrentNodes[i]: " + currentNodes[i]);
         System.out.print(", Result: " + result);
-        System.out.println("\n---");
 
 
         if (currentNodes[i] == null) {
@@ -45,21 +45,20 @@ public class MergeKLinkedLists {
 
         //initialize
         if (resultCurr == null) {
-          result = resultCurr = new ListNode();
-          resultCurr.val = currentNodes[i].val;
+          result = resultCurr = new ListNode(currentNodes[i].val);
           currentNodes[i] = currentNodes[i].next;
+
+          System.out.println("\n ResultCurr: " + resultCurr + " , Result: " + result);
+          System.out.println("\n---");
+
           continue;
         }
 
-
+        //vertical comparison
         if (resultCurr.val == currentNodes[i].val) {
           resultCurr.next = new ListNode(currentNodes[i].val);
-          resultCurr = resultCurr.next;
-          currentNodes[i] = currentNodes[i].next;
-          continue;
         }
-
-        if (resultCurr.val <= currentNodes[i].val) {
+        else if (resultCurr.val <= currentNodes[i].val) {
           resultCurr.next = new ListNode(currentNodes[i].val);
         } else {
           resultCurr.next = new ListNode(resultCurr.val, resultCurr.next);
@@ -69,15 +68,23 @@ public class MergeKLinkedLists {
 
         resultCurr = resultCurr.next;
         currentNodes[i] = currentNodes[i].next;
+
+        System.out.println("\n ResultCurr: " + resultCurr + " , Result: " + result);
+        System.out.println("\n---");
+
       }
     }
+
+
 
 
     return result;
   }
 
+
+
   //TODO: manually sort
-  public ListNode[] sortNodes(ListNode[] nodes) {
+  public ListNode[] sortHeads(ListNode[] nodes) {
     Map<Integer, List<ListNode>> listNodeMap = Arrays.stream(nodes)
         .filter(Objects::nonNull)
         .collect(Collectors.toMap(
