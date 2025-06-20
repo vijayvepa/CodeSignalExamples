@@ -4,53 +4,37 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class ListNode {
-  private int value;
-  private ListNode nextNode;
-
-  public int getValue() {
-    return value;
-  }
-
-  public ListNode getNextNode() {
-    return nextNode;
-  }
+  public int val;
+  public ListNode next;
 
   public ListNode() {
   }
 
-  public ListNode(int value) {
-    this.value = value;
+  public ListNode(int val) {
+    this.val = val;
   }
 
-  public ListNode(int value, ListNode nextNode) {
-    this.value = value;
-    this.nextNode = nextNode;
+  public ListNode(int val, ListNode next) {
+    this.val = val;
+    this.next = next;
   }
 
   public ListNode(List<Integer> values) {
 
-    this.value = values.get(0);
+    this.val = values.get(0);
     final List<Integer> list = values.stream().skip(1).toList();
 
     if(!list.isEmpty()) {
-      this.nextNode = new ListNode(list);
+      this.next = new ListNode(list);
     }
   }
 
   public List<Integer> toList() {
-    if (nextNode == null) {
-      return List.of(value);
+    if (next == null) {
+      return List.of(val);
     }
 
-    return Stream.concat(Stream.of(value), nextNode.toList().stream()).toList();
-  }
-
-  public void setValue(int value){
-    this.value = value;
-  }
-
-  public void setNextNode(ListNode listNode) {
-    this.nextNode = listNode;
+    return Stream.concat(Stream.of(val), next.toList().stream()).toList();
   }
 
   @Override

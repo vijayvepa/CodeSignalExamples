@@ -27,9 +27,9 @@ public class MiddleOfLinkedList {
 
     int size = 0;
     ListNode curr = input;
-    while (curr.getNextNode() != null) {
+    while (curr.next != null) {
       size++;
-      curr = curr.getNextNode();
+      curr = curr.next;
     }
 
     System.out.println("Size: " + size);
@@ -40,7 +40,7 @@ public class MiddleOfLinkedList {
     ListNode middleNode = input;
     while (index != middleIndex) {
       index++;
-      middleNode = middleNode.getNextNode();
+      middleNode = middleNode.next;
     }
 
     return middleNode;
@@ -50,9 +50,9 @@ public class MiddleOfLinkedList {
     List<ListNode> nodes = new ArrayList<>();
     ListNode curr = input;
 
-    while (curr.getNextNode() != null){
+    while (curr.next != null) {
       nodes.add(curr);
-      curr = curr.getNextNode();
+      curr = curr.next;
     }
 
     int size = nodes.size();
@@ -65,9 +65,9 @@ public class MiddleOfLinkedList {
     ListNode middle = input;
     ListNode end = input;
 
-    while (end != null && end.getNextNode() != null) {
-      middle = middle.getNextNode();
-      end = end.getNextNode().getNextNode(); //move by 2
+    while (end != null && end.next != null) {
+      middle = middle.next;
+      end = end.next.next; //move by 2
     }
 
     return middle;

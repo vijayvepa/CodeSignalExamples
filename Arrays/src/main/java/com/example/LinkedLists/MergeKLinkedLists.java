@@ -18,48 +18,57 @@ public class MergeKLinkedLists {
 
   public ListNode mergeKLists(ListNode[] lists) {
 
-    ListNode result = new ListNode();
+    ListNode result = null;
 
-    ListNode resultCurr = result;
-    ListNode[] currentNodes = new ListNode[lists.length];
+    ListNode resultCurr = null;
+    ListNode[] currentNodes = Arrays.stream(lists).filter(Objects::nonNull).toList().toArray(new ListNode[0]);
 
-    System.arraycopy(lists, 0, currentNodes, 0, lists.length);
+    if(currentNodes.length == 0) {
+      return null;
+    }
 
     while (currentNodes.length > 0) {
       currentNodes = sortNodes(currentNodes);
 
       for (int i = 0; i < currentNodes.length; i++) {
 
-        System.out.println("Index: " + i);
+        System.out.print("Index: " + i);
+        System.out.print(", ResultCurr: " + resultCurr);
+        System.out.print(", CurrentNodes[i]: " + currentNodes[i]);
+        System.out.print(", Result: " + result);
+        System.out.println("\n---");
+
 
         if (currentNodes[i] == null) {
           continue;
         }
 
-        if (resultCurr.getValue() == 0) {
-          resultCurr.setValue(currentNodes[i].getValue());
-          currentNodes[i] = currentNodes[i].getNextNode();
+        //initialize
+        if (resultCurr == null) {
+          result = resultCurr = new ListNode();
+          resultCurr.val = currentNodes[i].val;
+          currentNodes[i] = currentNodes[i].next;
           continue;
         }
 
-        if (resultCurr.getValue() == currentNodes[i].getValue()) {
-          resultCurr.setNextNode(new ListNode(currentNodes[i].getValue()));
-          resultCurr = resultCurr.getNextNode();
-          currentNodes[i] = currentNodes[i].getNextNode();
+
+        if (resultCurr.val == currentNodes[i].val) {
+          resultCurr.next = new ListNode(currentNodes[i].val);
+          resultCurr = resultCurr.next;
+          currentNodes[i] = currentNodes[i].next;
           continue;
         }
 
-        if (resultCurr.getValue() <= currentNodes[i].getValue()) {
-          resultCurr.setNextNode(new ListNode(currentNodes[i].getValue()));
-          resultCurr = resultCurr.getNextNode();
-          currentNodes[i] = currentNodes[i].getNextNode();
+        if (resultCurr.val <= currentNodes[i].val) {
+          resultCurr.next = new ListNode(currentNodes[i].val);
         } else {
-          resultCurr.setNextNode(new ListNode(resultCurr.getValue(), resultCurr.getNextNode()));
-          resultCurr.setValue(currentNodes[i].getValue());
+          resultCurr.next = new ListNode(resultCurr.val, resultCurr.next);
+          resultCurr.val = currentNodes[i].val;
 
-          resultCurr = resultCurr.getNextNode();
-          currentNodes[i] = currentNodes[i].getNextNode();
         }
+
+        resultCurr = resultCurr.next;
+        currentNodes[i] = currentNodes[i].next;
       }
     }
 
@@ -67,20 +76,21 @@ public class MergeKLinkedLists {
     return result;
   }
 
-  public static void main(String[] args) {
-    new MergeKLinkedLists().run();
-  }
-
   //TODO: manually sort
   public ListNode[] sortNodes(ListNode[] nodes) {
     Map<Integer, List<ListNode>> listNodeMap = Arrays.stream(nodes)
-        .filter(x -> x != null)
+        .filter(Objects::nonNull)
         .collect(Collectors.toMap(
-            ListNode::getValue, node -> Stream.of(node).toList(), (x, y) ->
+            listNode -> listNode.val, node -> Stream.of(node).toList(), (x, y) ->
                 Stream.concat(x.stream(), y.stream()).toList()));
     final List<Integer> list = listNodeMap.keySet().stream().sorted().toList();
 
     return list.stream().map(listNodeMap::get).flatMap(Collection::stream).toList().toArray(new ListNode[0]);
+  }
+
+
+  public static void main(String[] args) {
+    new MergeKLinkedLists().run();
   }
 
   public void run() {
@@ -92,7 +102,9 @@ public class MergeKLinkedLists {
 
     example1(solution);
     example2(solution);
-
+    example3(solution);
+    example4(solution);
+    example6(solution);
   }
 
   void example1(Function<ListNode[], ListNode> solution) {
@@ -108,9 +120,46 @@ public class MergeKLinkedLists {
     testParams(input, expected, this::mergeKLists);
   }
 
+
+  void example3(Function<ListNode[], ListNode> solution) {
+    ListNode[] input = new ListNode[]{
+        null,
+        new ListNode(1),
+    };
+    ListNode expected = new ListNode(List.of(
+        1
+    ));
+
+    testParams(input, expected, this::mergeKLists);
+  }
+
+  void example4(Function<ListNode[], ListNode> solution) {
+    ListNode[] input = new ListNode[]{
+        new ListNode(1),
+        new ListNode(0),
+    };
+    ListNode expected = new ListNode(List.of(
+        0,1
+    ));
+
+    testParams(input, expected, this::mergeKLists);
+  }
+
+  void example6(Function<ListNode[], ListNode> solution) {
+    ListNode[] input = new ListNode[]{
+        new ListNode(List.of(1,2,3)),
+        new ListNode(List.of(4,5,6,7)),
+    };
+    ListNode expected = new ListNode(List.of(
+        1,2,3,4,5,6,7
+    ));
+
+    testParams(input, expected, this::mergeKLists);
+  }
+
   void example2(Function<ListNode[], ListNode> solution) {
     ListNode[] input = new ListNode[]{};
-    ListNode expected = new ListNode();
+    ListNode expected = null;
 
     testParams(input, expected, this::mergeKLists);
   }
@@ -118,9 +167,9 @@ public class MergeKLinkedLists {
   void testParams(ListNode[] input, ListNode expected, Function<ListNode[], ListNode> solution) {
     System.out.println("Input: " + Arrays.toString(input));
 
-    String expectedText = expected.toString();
+    String expectedText = expected == null ? "[]" : expected.toString();
     ListNode actual = solution.apply(input);
-    String actualText = actual.toString();
+    String actualText = actual == null ? "[]" : actual.toString();
 
     if (Objects.equals(expectedText, actualText)) {
       System.out.println("Passed: " + expectedText + "==" + actualText);
