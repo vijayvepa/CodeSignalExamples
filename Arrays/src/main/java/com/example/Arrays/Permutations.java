@@ -76,6 +76,7 @@ public class Permutations {
     test(new int[]{1}, List.of(List.of(1)), this::permute);
     test(new int[]{1,2}, List.of(List.of(1, 2), List.of(2,1)), this::permute);
     test(new int[]{1,1,2}, List.of(List.of(1, 1, 2), List.of(1,2,1), List.of(2, 1, 1)), this::permute);
+    test(new int[]{1,2,3}, List.of(List.of(1, 2, 3), List.of(1,3,2), List.of(2, 1, 3), List.of(2,3,1), List.of(3, 2, 1), List.of(3,1,2)), this::permute);
   }
 
   public static void main(String[] args) {
